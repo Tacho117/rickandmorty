@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+.DS_Store
+*.log
+
+# Notas personales de estudio: no se suben al repositorio
+EXPLICACION.md

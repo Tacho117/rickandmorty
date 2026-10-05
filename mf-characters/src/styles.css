@@ -1,0 +1,109 @@
+/* Todas las clases usan el prefijo "rm-" para no chocar con estilos de otros MFs.
+   Las variables vienen del Shell; el segundo valor es el fallback para modo standalone. */
+.rm-characters {
+  font-family: var(--font, system-ui, sans-serif);
+  color: var(--text, #1c1f26);
+}
+.rm-characters__header h1 { margin: 0 0 4px; font-size: 1.75rem; }
+.rm-characters__header p { margin: 0 0 20px; color: var(--muted, #5f6776); }
+
+.rm-filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+  padding: 16px;
+  margin-bottom: 20px;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #e3e6ec);
+  border-radius: 12px;
+}
+.rm-field { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; color: var(--muted, #5f6776); }
+.rm-field input,
+.rm-field select {
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 10px 12px;
+  border: 1px solid var(--border, #e3e6ec);
+  border-radius: 8px;
+  background: var(--bg, #f6f7f9);
+  color: var(--text, #1c1f26);
+}
+.rm-field input:focus,
+.rm-field select:focus { outline: 2px solid var(--accent, #3aa55d); outline-offset: 1px; }
+
+.rm-btn {
+  font: inherit;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--accent, #3aa55d);
+  background: var(--accent, #3aa55d);
+  color: #fff;
+  cursor: pointer;
+}
+.rm-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.rm-btn--ghost { background: transparent; color: var(--accent, #3aa55d); }
+
+.rm-results-count { margin: 0 0 12px; font-size: 0.9rem; color: var(--muted, #5f6776); }
+
+.rm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.rm-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border, #e3e6ec);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.rm-card:hover,
+.rm-card:focus-visible { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); }
+.rm-card__img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+.rm-card__body { padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.rm-card__name { margin: 0; font-size: 1.05rem; }
+.rm-card__meta { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.rm-card__meta dt { font-size: 0.75rem; color: var(--muted, #5f6776); }
+.rm-card__meta dd { margin: 0; font-size: 0.9rem; }
+
+.rm-card--skeleton {
+  min-height: 330px;
+  cursor: default;
+  background: linear-gradient(90deg, var(--border, #e3e6ec) 25%, var(--surface, #fff) 50%, var(--border, #e3e6ec) 75%);
+  background-size: 200% 100%;
+  animation: rm-shimmer 1.2s infinite;
+}
+@keyframes rm-shimmer { to { background-position: -200% 0; } }
+
+.rm-status { display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; }
+.rm-status__dot { width: 8px; height: 8px; border-radius: 50%; background: #9aa1ad; }
+.rm-status--alive .rm-status__dot { background: #3aa55d; }
+.rm-status--dead .rm-status__dot { background: #d64545; }
+
+.rm-state {
+  padding: 40px 16px;
+  text-align: center;
+  background: var(--surface, #fff);
+  border: 1px dashed var(--border, #e3e6ec);
+  border-radius: 12px;
+}
+.rm-state--error { border-color: #d64545; }
+.rm-state__detail { color: var(--muted, #5f6776); font-size: 0.9rem; }
+
+.rm-pagination { display: flex; justify-content: center; align-items: center; gap: 16px; margin: 24px 0 8px; }
+.rm-pagination__info { font-size: 0.9rem; color: var(--muted, #5f6776); }
+
+@media (max-width: 720px) {
+  .rm-filters { grid-template-columns: 1fr 1fr; }
+  .rm-filters .rm-field:first-child { grid-column: 1 / -1; }
+  .rm-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+}
