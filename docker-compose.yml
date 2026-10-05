@@ -1,0 +1,33 @@
+# Levanta todo el ecosistema con un solo comando:  docker compose up --build
+# Después abre http://localhost:3000
+services:
+  mf-characters:
+    build:
+      context: ./mf-characters
+      args:
+        PUBLIC_URL: http://localhost:3001/
+    ports:
+      - "3001:80"
+
+  mf-character-detail:
+    build:
+      context: ./mf-character-detail
+      args:
+        PUBLIC_URL: http://localhost:3002/
+    ports:
+      - "3002:80"
+
+  mf-shell:
+    build:
+      context: ./mf-shell
+      args:
+        CHARACTERS_URL: http://localhost:3001
+        DETAIL_URL: http://localhost:3002
+    ports:
+      - "3000:80"
+    # El Shell arranca hasta que los remotos responden su remoteEntry.js (ver HEALTHCHECK en sus Dockerfile)
+    depends_on:
+      mf-characters:
+        condition: service_healthy
+      mf-character-detail:
+        condition: service_healthy
