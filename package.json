@@ -6,7 +6,7 @@
   "scripts": {
     "install:all": "npm install && cd mf-shell && npm install && cd ../mf-characters && npm install && cd ../mf-character-detail && npm install",
     "start": "concurrently -n shell,characters,detail -c blue,green,magenta \"npm start --prefix mf-shell\" \"npm start --prefix mf-characters\" \"npm start --prefix mf-character-detail\"",
-    "test": "npm test --prefix mf-characters && npm test --prefix mf-character-detail",
+    "test": "npm test --prefix mf-shell && npm test --prefix mf-characters && npm test --prefix mf-character-detail",
     "build": "npm run build --prefix mf-characters && npm run build --prefix mf-character-detail && npm run build --prefix mf-shell"
   },
   "devDependencies": {
