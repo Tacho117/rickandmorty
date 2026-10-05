@@ -29,6 +29,9 @@ module.exports = (_env, argv) => ({
     port: PORT,
     historyApiFallback: true, // cualquier ruta (/character/1) devuelve index.html
     headers: { 'Access-Control-Allow-Origin': '*' }, // el Shell (puerto 3000) descarga desde aquí
+    // remoteEntry.js también carga el cliente de desarrollo de ESTE servidor dentro de la página del Shell.
+    // Sin esto, su overlay taparía errores que ya manejan los ErrorBoundary (ej. otro remoto caído).
+    client: { overlay: { runtimeErrors: false } },
   },
   plugins: [
     new ModuleFederationPlugin({

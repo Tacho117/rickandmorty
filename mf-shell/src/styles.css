@@ -1,0 +1,58 @@
+:root {
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --text: #1c1f26;
+  --muted: #5f6776;
+  --border: #e3e6ec;
+  --accent: #3aa55d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #12151b;
+    --surface: #1b2029;
+    --text: #e8eaef;
+    --muted: #9aa1ad;
+    --border: #2b313c;
+  }
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); }
+
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+.main { flex: 1; padding-top: 28px; padding-bottom: 40px; }
+
+.navbar { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+.navbar__inner { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.navbar__brand { font-weight: 700; color: var(--text); text-decoration: none; }
+.navbar__link { color: var(--muted); text-decoration: none; }
+.navbar__link.active { color: var(--accent); font-weight: 600; }
+
+.footer { border-top: 1px solid var(--border); padding: 18px 0; font-size: 0.85rem; color: var(--muted); }
+
+/* Estados propios del Shell (carga y error de un remoto). Prefijo "shell-". */
+.shell-state { text-align: center; padding: 48px 16px; color: var(--muted); }
+.shell-state--error { color: #c0392b; }
+.shell-muted { color: var(--muted); font-size: 0.9rem; }
+.shell-btn {
+  font: inherit;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+.shell-spinner {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  animation: shell-spin 0.8s linear infinite;
+}
+@keyframes shell-spin { to { transform: rotate(360deg); } }
