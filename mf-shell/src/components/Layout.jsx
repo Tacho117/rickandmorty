@@ -7,18 +7,19 @@ import { Link, useLocation } from 'react-router-dom';
 // Los accesos por estado abren la lista ya filtrada (/?status=alive). Como MF-Characters
 // guarda sus filtros en la URL, el Shell se "comunica" con él con un simple enlace.
 const NAV_LINKS = [
-  { label: 'Personajes', pathname: '/', status: '' },
-  { label: 'Vivos', pathname: '/', status: 'alive' },
-  { label: 'Muertos', pathname: '/', status: 'dead' },
-  { label: 'Desconocidos', pathname: '/', status: 'unknown' },
-  { label: 'Acerca de', pathname: '/about' },
+  { label: 'Personajes', status: '' },
+  { label: 'Vivos', status: 'alive' },
+  { label: 'Muertos', status: 'dead' },
+  { label: 'Desconocidos', status: 'unknown' },
 ];
 
-const hrefOf = (link) => (link.status ? `${link.pathname}?status=${link.status}` : link.pathname);
+// { status: 'alive' } → "/?status=alive"   ·   { status: '' } → "/"
+const hrefOf = (link) => (link.status ? `/?status=${link.status}` : '/');
 
+// Activo = estamos en la lista y el ?status= de la URL coincide con el del enlace.
+// (NavLink no sirve aquí: solo compara la ruta "/" y marcaría los 4 a la vez.)
 function isLinkActive(link, location) {
-  if (location.pathname !== link.pathname) return false;
-  if (link.pathname !== '/') return true;
+  if (location.pathname !== '/') return false;
   const status = new URLSearchParams(location.search).get('status') || '';
   return status === link.status;
 }

@@ -27,14 +27,6 @@ describe('App (Shell)', () => {
     expect(screen.queryByText('Remoto MF-Characters')).not.toBeInTheDocument();
   });
 
-  it('en "/about" muestra la página Acerca de, que vive en el propio Shell', () => {
-    renderAt('/about');
-
-    expect(screen.getByRole('heading', { level: 1, name: 'Acerca del proyecto' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'MF-Characters' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Acerca de' })).toHaveAttribute('aria-current', 'page');
-  });
-
   it('muestra una página 404 en rutas desconocidas', () => {
     renderAt('/no-existe');
 

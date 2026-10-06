@@ -2,7 +2,6 @@ import { lazy } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import Layout from './components/Layout';
 import RemoteSlot from './components/RemoteSlot';
-import AboutPage from './pages/AboutPage';
 
 // "mfCharacters/CharactersApp" NO es una carpeta local: Module Federation lo descarga
 // en tiempo de ejecución desde http://localhost:3001/remoteEntry.js.
@@ -30,7 +29,6 @@ export default function App() {
             </RemoteSlot>
           }
         />
-        <Route path="/about" element={<AboutPage />} />
         <Route
           path="*"
           element={

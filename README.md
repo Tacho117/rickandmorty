@@ -107,11 +107,11 @@ cd mf-characters && npm test
 cd mf-character-detail && npm test
 ```
 
-18 pruebas con **Jest + React Testing Library**. No dependen de internet: en los remotos se mockea la capa de servicios y en el Shell los remotos se sustituyen por componentes falsos (`moduleNameMapper`).
+17 pruebas con **Jest + React Testing Library**. No dependen de internet: en los remotos se mockea la capa de servicios y en el Shell los remotos se sustituyen por componentes falsos (`moduleNameMapper`).
 
 | Archivo | Qué verifica |
 |---|---|
-| `mf-shell/.../App.test.jsx` | Layout común; `/` carga MF-Characters (con su indicador de carga); `/character/:id` carga MF-CharacterDetail y le comparte el Router; página "Acerca de"; página 404 |
+| `mf-shell/.../App.test.jsx` | Layout común; `/` carga MF-Characters (con su indicador de carga); `/character/:id` carga MF-CharacterDetail y le comparte el Router; página 404 |
 | `mf-shell/.../Layout.test.jsx` | El menú hamburguesa abre y cierra (también con Escape), se cierra al navegar, marca la opción activa; accesos rápidos por estado; footer con el año actual |
 | `mf-shell/.../RemoteSlot.test.jsx` | Suspense muestra la carga; si un remoto no se puede descargar, el ErrorBoundary aísla el error, lo registra en el logger y el resto de la página sigue visible |
 | `mf-characters/.../CharacterCard.test.jsx` | La tarjeta muestra imagen, nombre, estado, especie y género; el clic avisa al padre con el `id` |
@@ -137,7 +137,6 @@ cd mf-character-detail && npm test
 - Estilo **cómic / neo-brutalista**: bordes negros gruesos, sombras duras, colores planos y tipografías Bangers (títulos) y Nunito (texto).
 - **Responsivo:** en pantallas de hasta 860 px el navbar cambia a un **menú hamburguesa** accesible (`aria-expanded`, `aria-controls`, se cierra con Escape o al navegar). Los filtros y las tarjetas se reacomodan en celular.
 - Respeta `prefers-reduced-motion`: sin animaciones para quien lo pide en su sistema.
-- Página **Acerca de** (`/about`) en el Shell, con los 3 microfrontends y el stack.
 
 ## Stack
 React 18 · React Router 6 · Webpack 5 (Module Federation) · Babel · Jest · React Testing Library · Docker · nginx · CSS puro (responsivo)

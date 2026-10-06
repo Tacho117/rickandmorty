@@ -186,65 +186,6 @@ body {
 }
 @keyframes shell-spin { to { transform: rotate(360deg); } }
 
-/* ---------- Página "Acerca de" ---------- */
-.about__hero {
-  padding: 28px;
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-lg);
-}
-.about__hero h1 {
-  margin: 0 0 8px;
-  font-family: var(--font-display);
-  font-size: 2.8rem;
-  letter-spacing: 1px;
-  font-weight: 400;
-}
-.about__hero p { margin: 0; font-size: 1.1rem; line-height: 1.5; }
-
-.about__subtitle {
-  margin: 36px 0 14px;
-  font-family: var(--font-display);
-  font-size: 1.9rem;
-  font-weight: 400;
-  letter-spacing: 1px;
-}
-
-.about__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-.about__card {
-  position: relative;
-  padding: 22px;
-  border: 3px solid var(--ink);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.about__card h3 { margin: 0 0 8px; font-family: var(--font-display); font-size: 1.6rem; font-weight: 400; letter-spacing: 1px; }
-.about__card p { margin: 0; font-weight: 600; line-height: 1.45; }
-.about__card--yellow { background: var(--yellow); }
-.about__card--cyan { background: var(--cyan); }
-.about__card--pink { background: var(--pink); }
-.about__port {
-  position: absolute;
-  top: -14px;
-  right: 14px;
-  padding: 2px 10px;
-  font-weight: 800;
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: 999px;
-}
-
-.about__stack { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 28px; padding: 0; list-style: none; }
-.about__stack li {
-  padding: 6px 14px;
-  font-weight: 800;
-  background: var(--surface);
-  border: 3px solid var(--ink);
-  border-radius: 999px;
-  box-shadow: 3px 3px 0 var(--ink);
-}
-
 /* Respeta a quien pide menos animación en su sistema */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
