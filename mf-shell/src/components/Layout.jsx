@@ -15,7 +15,7 @@ export default function Layout({ children }) {
       </header>
       <main className="container main">{children}</main>
       <footer className="footer">
-        <div className="container">Datos de rickandmortyapi.com · Microfrontends con Module Federation</div>
+        <div className="container">Datos de rickandmortyapi.com</div>
       </footer>
     </div>
   );
