@@ -33,6 +33,8 @@ Aplicación web que consume la [Rick and Morty API](https://rickandmortyapi.com/
 - **Dependencias compartidas como singleton** (`react`, `react-dom`, `react-router-dom`): una sola copia en el navegador. Dos copias de React rompen los hooks.
 - **Aislamiento de fallos:** cada remoto se monta dentro de `RemoteSlot` (`Suspense` + `ErrorBoundary`). Si un MF está caído, solo esa zona muestra un error y el resto del Shell sigue funcionando.
 - **Estilos aislados por prefijo** (`rm-`, `rmd-`, `shell-`) para evitar choques de CSS entre MFs.
+- **Tema compartido con variables CSS:** el Shell define los colores, fuentes y sombras (`--ink`, `--yellow`, `--shadow`…) y los remotos los usan con `var(--x, respaldo)`. Así toda la app luce igual sin compartir archivos CSS, y cada remoto se ve bien también en modo standalone.
+- **Menú con accesos rápidos por estado** (`/?status=alive`): como los filtros viven en la URL, el Shell abre la lista ya filtrada con un simple enlace, sin acoplarse al código de MF-Characters.
 
 ### Estructura de cada remoto (separación de lógica, UI y servicios)
 ```
@@ -105,14 +107,15 @@ cd mf-characters && npm test
 cd mf-character-detail && npm test
 ```
 
-12 pruebas con **Jest + React Testing Library**. No dependen de internet: en los remotos se mockea la capa de servicios y en el Shell los remotos se sustituyen por componentes falsos (`moduleNameMapper`).
+18 pruebas con **Jest + React Testing Library**. No dependen de internet: en los remotos se mockea la capa de servicios y en el Shell los remotos se sustituyen por componentes falsos (`moduleNameMapper`).
 
 | Archivo | Qué verifica |
 |---|---|
-| `mf-shell/.../App.test.jsx` | Layout común; `/` carga MF-Characters (con su indicador de carga); `/character/:id` carga MF-CharacterDetail y le comparte el Router; página 404 |
+| `mf-shell/.../App.test.jsx` | Layout común; `/` carga MF-Characters (con su indicador de carga); `/character/:id` carga MF-CharacterDetail y le comparte el Router; página "Acerca de"; página 404 |
+| `mf-shell/.../Layout.test.jsx` | El menú hamburguesa abre y cierra (también con Escape), se cierra al navegar, marca la opción activa; accesos rápidos por estado; footer con el año actual |
 | `mf-shell/.../RemoteSlot.test.jsx` | Suspense muestra la carga; si un remoto no se puede descargar, el ErrorBoundary aísla el error, lo registra en el logger y el resto de la página sigue visible |
 | `mf-characters/.../CharacterCard.test.jsx` | La tarjeta muestra imagen, nombre, estado, especie y género; el clic avisa al padre con el `id` |
-| `mf-characters/.../CharactersApp.test.jsx` | Estado de carga → tarjetas; error → botón Reintentar → recupera; filtros sin resultados → mensaje vacío |
+| `mf-characters/.../CharactersApp.test.jsx` | Estado de carga → tarjetas; error → botón Reintentar → recupera; filtros sin resultados → mensaje vacío; si la URL cambia desde fuera (menú o botón atrás), el buscador se actualiza |
 | `mf-character-detail/.../CharacterDetailApp.test.jsx` | Lee el `id` de la URL y muestra detalle y episodios; un 404 muestra "Personaje no encontrado" |
 
 ## Manejo de errores y logging
@@ -130,8 +133,14 @@ cd mf-character-detail && npm test
   ```
   Este formato está listo para enviarse a Datadog, Kibana o Sentry y filtrarse por campo.
 
+## Diseño
+- Estilo **cómic / neo-brutalista**: bordes negros gruesos, sombras duras, colores planos y tipografías Bangers (títulos) y Nunito (texto).
+- **Responsivo:** en pantallas de hasta 860 px el navbar cambia a un **menú hamburguesa** accesible (`aria-expanded`, `aria-controls`, se cierra con Escape o al navegar). Los filtros y las tarjetas se reacomodan en celular.
+- Respeta `prefers-reduced-motion`: sin animaciones para quien lo pide en su sistema.
+- Página **Acerca de** (`/about`) en el Shell, con los 3 microfrontends y el stack.
+
 ## Stack
-React 18 · React Router 6 · Webpack 5 (Module Federation) · Babel · Jest · React Testing Library · Docker · nginx · CSS puro (responsivo, con modo oscuro automático)
+React 18 · React Router 6 · Webpack 5 (Module Federation) · Babel · Jest · React Testing Library · Docker · nginx · CSS puro (responsivo)
 
 ## Mejoras posibles
 - Compartir un *design system* como un MF adicional en lugar de duplicar `StatusBadge`.

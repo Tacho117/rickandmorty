@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Link } from 'react-router-dom';
 import CharactersApp from '../CharactersApp';
 import { getCharacters } from '../services/characterService';
 
@@ -57,5 +57,25 @@ describe('CharactersApp', () => {
     renderApp();
 
     expect(await screen.findByText(/no se encontraron personajes/i)).toBeInTheDocument();
+  });
+
+  it('si la URL cambia desde fuera (menú del Shell o "atrás"), el buscador de nombre se actualiza', async () => {
+    getCharacters.mockResolvedValue({ characters: [], totalPages: 0, totalCount: 0 });
+
+    render(
+      <MemoryRouter initialEntries={['/?name=rick']} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        {/* Simula el enlace "Vivos" del menú del Shell */}
+        <Link to="/?status=alive">Vivos</Link>
+        <CharactersApp />
+      </MemoryRouter>
+    );
+
+    const nameInput = screen.getByRole('searchbox', { name: /nombre/i });
+    expect(nameInput).toHaveValue('rick');
+
+    await userEvent.click(screen.getByRole('link', { name: 'Vivos' }));
+
+    expect(nameInput).toHaveValue('');
+    expect(screen.getByRole('combobox', { name: /estado/i })).toHaveValue('alive');
   });
 });

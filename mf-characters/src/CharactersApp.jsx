@@ -40,6 +40,13 @@ export default function CharactersApp() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedName]);
 
+  // Si la URL cambia desde fuera (un enlace del menú del Shell o el botón "atrás"), el input la sigue.
+  // Cuando el cambio lo provocó el propio debounce, nameInUrl === debouncedName y no se toca nada.
+  useEffect(() => {
+    if (nameInUrl !== debouncedName) setNameInput(nameInUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nameInUrl]);
+
   const { characters, totalPages, totalCount, loading, error, retry } = useCharacters(
     { name: nameInUrl, status, species },
     page
